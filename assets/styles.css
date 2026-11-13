@@ -164,7 +164,12 @@ button, input, select, textarea { font: inherit; }
 .consent { grid-template-columns: 17px 1fr; align-items: start; gap: 9px !important; margin: 4px 0 20px !important; color: #687382 !important; font-size: 11px !important; font-weight: 500 !important; }
 .consent input { width: 16px; height: 16px; margin: 0; }
 .submit-button { width: 100%; border: 0; }
+.submit-button:disabled { cursor: wait; opacity: .72; }
 .submit-button b { margin-left: auto; font-size: 18px; }
+.form-status { display: none; margin: 14px 0 0; padding: 11px 13px; border-radius: 2px; font-size: 12px; font-weight: 700; line-height: 1.5; }
+.form-status.success, .form-status.error { display: block; }
+.form-status.success { color: #17643a; background: #e9f7ef; border: 1px solid #b8e2ca; }
+.form-status.error { color: #8a2525; background: #fff0f0; border: 1px solid #efc2c2; }
 .form-note { margin: 13px 0 0; color: #778291; text-align: center; font-size: 10px; line-height: 1.5; }
 
 .site-footer { color: white; background: #04152e; }
