@@ -46,10 +46,9 @@ customerForm?.addEventListener('submit', async (event) => {
   const submitButton = customerForm.querySelector('.submit-button');
   const submitLabel = submitButton?.querySelector('span');
   const formData = new FormData(customerForm);
-  const payload = Object.fromEntries(formData.entries());
 
   if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
-    payload._url = window.location.href;
+    formData.set('_url', window.location.href);
   }
 
   submitButton?.setAttribute('disabled', '');
@@ -62,10 +61,9 @@ customerForm?.addEventListener('submit', async (event) => {
     const response = await fetch('https://formsubmit.co/ajax/naenterprise6935@gmail.com', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: formData
     });
     const result = await response.json();
 
@@ -77,8 +75,13 @@ customerForm?.addEventListener('submit', async (event) => {
     formStatus?.classList.add('success');
     if (formStatus) formStatus.textContent = 'Thank you — your enquiry has been sent successfully.';
   } catch (error) {
+    console.error('Enquiry submission failed:', error);
     formStatus?.classList.add('error');
-    if (formStatus) formStatus.textContent = 'We could not send your enquiry. Please call +91 99879 37133 or email naenterprise6935@gmail.com.';
+    if (formStatus) {
+      formStatus.textContent = window.location.protocol === 'file:'
+        ? 'This form cannot send from a file preview. Please open and submit it on the published website.'
+        : 'We could not send your enquiry. Please call +91 99879 37133 or email naenterprise6935@gmail.com.';
+    }
   } finally {
     submitButton?.removeAttribute('disabled');
     submitButton?.removeAttribute('aria-busy');
